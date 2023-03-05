@@ -62,17 +62,14 @@ button.playnow {
     display: block;
     height: 300px;
     width: 600px;
-    margin: 0px 10px 50%;
+    margin: 0px 10px 0px;
 }
 
 .dots {
-    position: absolute;
-    margin: 10px 20px 10px;
+    padding-bottom: 40%;
+    margin-left: 30%;
     display: flex;
-    justify-content: center;
     column-gap: 40px;
-    top: 130%;
-    left: 45%;
 }
 
 .page3 {
