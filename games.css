@@ -1,0 +1,24 @@
+body {
+    background-color: #c0a37d;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    gap: 20px;
+}
+
+.judulGame {
+width: 410px;
+height: 62px;
+left: 218px;
+top: 40px;
+font-family: sans-serif;
+font-style: normal;
+font-weight: 700;
+font-size: 36px;
+line-height: 49px;
+text-align: start;
+color: #F9B23D;
+}
+
