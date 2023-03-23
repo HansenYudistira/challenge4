@@ -31,7 +31,7 @@ h2 {
     background-size: cover;
 }
 
-button.playnow {
+.playnow {
     font-size: 16px;
     width: 150px;
     margin: auto;
