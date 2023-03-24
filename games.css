@@ -6,19 +6,66 @@ body {
 header {
     display: flex;
     gap: 20px;
+    border-color: black;
+    border-width: 3px;
 }
 
-.judulGame {
-width: 410px;
-height: 62px;
-left: 218px;
-top: 40px;
-font-family: sans-serif;
-font-style: normal;
-font-weight: 700;
-font-size: 36px;
-line-height: 49px;
-text-align: start;
-color: #F9B23D;
+h2 {
+    left: 218px;
+    top: 40px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 49px;
+    text-align: start;
+    color: black;
 }
 
+.grid {
+    row-gap: 50px;
+}
+
+.logo {
+    width: 72px;
+    height: 72px;
+}
+
+.batu {
+    width: 128px;
+    height: 92px;
+}
+
+.kertas {
+    width: 115px;
+    height: 150px;
+}
+
+.gunting {
+    width: 134px;
+    height: 160px;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+h1 {
+    font-size: 80px;
+    font-weight: bold;
+    color: red;
+}
+
+.row {
+    row-gap: 50px;
+}
+
+#col-1 {
+    align-items: end;
+}
+
+#col-3 {
+    align-items: start;
+}
