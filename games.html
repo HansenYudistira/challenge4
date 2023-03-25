@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./games.css">
 </head>
 <body>
+    <script src="games.js"></script>
     <header>
         <a href="index.html" type="button" class="backButton" >
             <svg width="36" height="38" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,16 +24,16 @@
     <div class="grid gap-0 row-gap-5">
         <div class="row" id="row-1">
             <div class="col" id="col-1">
-                <h2 style="letter-spacing: 1px;">PLAYER 1</h2>
+                <h2 style="letter-spacing: 1px; text-align: center;">PLAYER 1</h2>
             </div>
             <div class="col" id="col-2"></div>
             <div class="col" id="col-3">
-                <h2 style="letter-spacing: 1px;">COM</h2>
+                <h2 style="letter-spacing: 1px; text-align: center;">COM</h2>
             </div>
         </div>
         <div class="row" id="row-2">
             <div class="col" id="col-1">
-                <button>
+                <button onclick="batu()">
                     <img src="./assets/batu.png" alt="" class="batu">
                 </button>
             </div>
@@ -66,6 +67,9 @@
             </div>
         </div>          
     </div>
+    <button onclick="refresh()" class="refresh">
+        <img src="./assets/refresh.png" alt="" class="refresh-img">
+    </button>
     
         
 </body>

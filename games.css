@@ -22,10 +22,6 @@ h2 {
     color: black;
 }
 
-.grid {
-    row-gap: 50px;
-}
-
 .logo {
     width: 72px;
     height: 72px;
@@ -56,16 +52,43 @@ h1 {
     font-size: 80px;
     font-weight: bold;
     color: red;
+    text-align: center;
 }
 
 .row {
-    row-gap: 50px;
+    text-align: center;
+    flex-wrap: nowrap;
 }
 
-#col-1 {
-    align-items: end;
+.col {
+    padding: 20px 20px 10px;
 }
 
-#col-3 {
-    align-items: start;
+.refresh {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.refresh-img {
+    width: 77px;
+    height: 71px;
+}
+
+.win {
+position: absolute;
+width: 296px;
+height: 186px;
+left: 568px;
+top: 525.37px;
+font-family: 'Open Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 38px;
+line-height: 52px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #FFFFFF;
+transform: rotate(-30.98deg);
 }
