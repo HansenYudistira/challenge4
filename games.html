@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="./games.css">
 </head>
 <body>
-    <script src="games.js"></script>
     <header>
         <a href="index.html" type="button" class="backButton" >
             <svg width="36" height="38" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,60 +16,59 @@
             </svg>
         </a>
         <img src="./assets/logo 1.png" alt="" class="logo">
-        <h2 style="color: #F9B23D;">ROCK PAPER SCISSORS</h2>
+        <h1>ROCK PAPER SCISSORS</h1>
     </header>
     <br>
     <br>
     <div class="grid gap-0 row-gap-5">
         <div class="row" id="row-1">
-            <div class="col" id="col-1">
+            <div class="col" id="col-11">
                 <h2 style="letter-spacing: 1px; text-align: center;">PLAYER 1</h2>
             </div>
-            <div class="col" id="col-2"></div>
-            <div class="col" id="col-3">
+            <div class="col" id="col-12"></div>
+            <div class="col" id="col-13">
                 <h2 style="letter-spacing: 1px; text-align: center;">COM</h2>
             </div>
         </div>
         <div class="row" id="row-2">
-            <div class="col" id="col-1">
-                <button onclick="batu()">
-                    <img src="./assets/batu.png" alt="" class="batu">
+            <div class="col" id="col-21">
+                <button onclick="pilihBatu()">
+                    <img src="./assets/batu.png" alt="" class="choices" id="batu">
                 </button>
             </div>
-            <div class="col" id="col-2"></div>
-            <div class="col" id="col-3">
-                <img src="./assets/batu.png" alt="" class="batu">
+            <div class="col" id="col-22"></div>
+            <div class="col" id="col-23">
+                <img src="./assets/batu.png" alt="" id="batu-com">
             </div>
         </div>
         <div class="row" id="row-3">
-            <div class="col" id="col-1">
-                <button>
-                    <img src="./assets/kertas.png" alt="" class="kertas">
+            <div class="col" id="col-31">
+                <button onclick="pilihKertas()">
+                    <img src="./assets/kertas.png" alt="" class="choices" id="kertas">
                 </button>
             </div>
-            <div class="col" id="col-2"> 
-                <h1> VS </h1>
+            <div class="col" id="result">
+                <span>VS</span>
             </div>
-            <div class="col" id="col-3">
-                <img src="./assets/kertas.png" alt="" class="kertas">
+            <div class="col" id="col-33">
+                <img src="./assets/kertas.png" alt="" id="kertas-com">
             </div>
         </div>
         <div class="row" id="row-4">
-            <div class="col" id="col-1">
-                <button>
-                    <img src="./assets/gunting.png" alt="" class="gunting">
+            <div class="col" id="col-41">
+                <button onclick="pilihGunting()">
+                    <img src="./assets/gunting.png" alt="" class="choices" id="gunting">
                 </button>
             </div>
-            <div class="col" id="col-2"></div>
-            <div class="col" id="col-3">
-                <img src="./assets/gunting.png" alt="" class="gunting">
+            <div class="col" id="col-42"></div>
+            <div class="col" id="col-43">
+                <img src="./assets/gunting.png" alt="" id="gunting-com">
             </div>
         </div>          
     </div>
-    <button onclick="refresh()" class="refresh">
+    <button onclick="ulang()" id="refresh">
         <img src="./assets/refresh.png" alt="" class="refresh-img">
-    </button>
-    
-        
+    </button>   
+    <script src="games.js"></script>    
 </body>
 </html>

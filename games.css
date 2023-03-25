@@ -10,6 +10,16 @@ header {
     border-width: 3px;
 }
 
+h1 {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 49px;
+    text-align: start;
+    color: #F9B23D;
+}
+
 h2 {
     left: 218px;
     top: 40px;
@@ -27,17 +37,32 @@ h2 {
     height: 72px;
 }
 
-.batu {
+#batu {
     width: 128px;
     height: 92px;
 }
 
-.kertas {
+#batu-com {
+    width: 128px;
+    height: 92px;
+}
+
+#kertas {
     width: 115px;
     height: 150px;
 }
 
-.gunting {
+#kertas-com {
+    width: 115px;
+    height: 150px;
+}
+
+#gunting {
+    width: 134px;
+    height: 160px;
+}
+
+#gunting-com {
     width: 134px;
     height: 160px;
 }
@@ -46,13 +71,25 @@ button {
     background: none;
     border: none;
     padding: 0;
+    width: 120px;
+    height: 120px;
 }
 
-h1 {
+#col-21:hover, #col-31:hover, #col-41:hover {
+    background: #c4c4c4;
+    transition: all 0.5s ease;
+    border-radius: 10px;
+}
+
+#result {
     font-size: 80px;
     font-weight: bold;
     color: red;
     text-align: center;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .row {
@@ -64,7 +101,7 @@ h1 {
     padding: 20px 20px 10px;
 }
 
-.refresh {
+#refresh {
     width: 100%;
     display: flex;
     justify-content: center;
