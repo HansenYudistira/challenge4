@@ -116,21 +116,3 @@ button {
     width: 77px;
     height: 71px;
 }
-
-.win {
-position: absolute;
-width: 296px;
-height: 186px;
-left: 568px;
-top: 525.37px;
-font-family: 'Open Sans';
-font-style: normal;
-font-weight: 700;
-font-size: 38px;
-line-height: 52px;
-text-align: center;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-color: #FFFFFF;
-transform: rotate(-30.98deg);
-}
