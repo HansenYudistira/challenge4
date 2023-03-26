@@ -73,6 +73,13 @@ button {
     padding: 0;
     width: 180px;
     height: 180px;
+    border-radius: 10px;
+}
+
+.comChoice {
+    width: 180px;
+    height: 180px;
+    border-radius: 10px;
 }
 
 #button1:hover, #button2:hover, #button3:hover {
@@ -93,12 +100,11 @@ button {
 }
 
 .grid {
-    grid-template-columns: 150px 150px auto 200px;
-    justify-content: space-evenly;
+    grid-template-columns: 180px 180px auto 200px;
+    text-align: center;
 }
 
 .row {
-    text-align: center;
     flex-wrap: nowrap;
 }
 
@@ -114,5 +120,5 @@ button {
 
 .refresh-img {
     width: 77px;
-    height: 71px;
+    height: 77px;
 }
