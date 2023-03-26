@@ -5,6 +5,7 @@ const kertas = document.getElementById("kertas");
 const batuCom = document.getElementById("batu-com");
 const guntingCom = document.getElementById("gunting-com");
 const kertasCom = document.getElementById("kertas-com");
+var pilihan = document.getElementsByClassName("pilihan");
 
 function getComputerChoice() {
     var rps = ['r', 'p', 's'];
@@ -45,9 +46,11 @@ function ulang() {
     result.innerText = 'VS';
 }
 
-
 function game(userChoice) {
     const computerChoice = getComputerChoice();
+    for( let i = 0; i < pilihan.length; i++) {
+        pilihan.disabled[i] = true;
+    }
     switch (userChoice + computerChoice) {
         case 'sp':
             gunting.style.background = '#c4c4c4';
@@ -95,16 +98,4 @@ function game(userChoice) {
             Draw();
             break;
     }
-}
-
-function pilihBatu() {
-    game("r");
-}
-
-function pilihKertas() {
-    game("p");
-}
-
-function pilihGunting() {
-    game("s");
 }

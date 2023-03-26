@@ -20,7 +20,7 @@
     </header>
     <br>
     <br>
-    <div class="grid gap-0 row-gap-5">
+    <div class="grid">
         <div class="row" id="row-1">
             <div class="col" id="col-11">
                 <h2 style="letter-spacing: 1px; text-align: center;">PLAYER 1</h2>
@@ -32,7 +32,7 @@
         </div>
         <div class="row" id="row-2">
             <div class="col" id="col-21">
-                <button onclick="pilihBatu()">
+                <button onclick="game('r')" class="pilihan">
                     <img src="./assets/batu.png" alt="" class="choices" id="batu">
                 </button>
             </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="row" id="row-3">
             <div class="col" id="col-31">
-                <button onclick="pilihKertas()">
+                <button onclick="game('p')" class="pilihan">
                     <img src="./assets/kertas.png" alt="" class="choices" id="kertas">
                 </button>
             </div>
@@ -56,7 +56,7 @@
         </div>
         <div class="row" id="row-4">
             <div class="col" id="col-41">
-                <button onclick="pilihGunting()">
+                <button onclick="game('s')" class="pilihan">
                     <img src="./assets/gunting.png" alt="" class="choices" id="gunting">
                 </button>
             </div>

@@ -92,6 +92,11 @@ button {
     align-content: center;
 }
 
+.grid {
+    grid-template-columns: 150px 150px auto 200px;
+    justify-content: space-evenly;
+}
+
 .row {
     text-align: center;
     flex-wrap: nowrap;
