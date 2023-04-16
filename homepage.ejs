@@ -29,6 +29,8 @@
         <div class="grid-5" style="flex-grow: 5">
           ABOUT ME
         </div>
+        <!-- JIKA BELUM LOGIN TAMPILANNYA SIGNUP 
+          JIKA SUDAH JADI SIGN OUT-->
         <div class="grid-6" style="flex-grow: 1">
           <% var username %>
           <% if (username) { %>
@@ -37,6 +39,8 @@
             <a href="/signup" type="button" class="loginButton" ><%= 'Sign Up' %></a>
           <% } %>
         </div>
+        <!-- JIKA BELUM LOGIN TAMPILANNYA LOGIN 
+          JIKA SUDAH JADI NAMA USERNAMENYA-->
         <div class="grid-7" style="flex-grow: 1">
           <% if (username) { %>
             <a href="/profile" type="button" class="loginButton"><%= username %></a>
