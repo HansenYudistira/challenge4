@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const routes = require('./router');
 const userData = require('./db/usernameData.json');
+const { error } = require('console');
 const port = 3000;
 // == BUAT SERVERNYA
 const app = express();
@@ -29,13 +30,13 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 
 // == ERROR HANDLING
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
     const error = new Error('Not Found');
     error.status = 404;
     next(error);
 });
 
-app.use((error, req, res, next) => {
+app.use(function (error, req, res, next) {
     res.status(error.status || 500);
     res.json({
       error: {

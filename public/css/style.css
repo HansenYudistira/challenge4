@@ -1,9 +1,14 @@
-body {
+body, .loginButton {
   color: white;
   font-family: sans-serif;
   font-size: 18px;
   font-weight: normal;
   letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.loginButton {
+    font-size: 14px;
 }
 
 h1 {

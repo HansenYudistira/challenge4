@@ -3,26 +3,39 @@ const router = express();
 const userData = require('./db/usernameData.json');
 
 //route untuk ke homepage
-router.get(['/', '/home'], function(req, res) {
-    res.render(__dirname + '/index');
+router.get(['/', '/home'], function (req, res) {
+    res.render(__dirname + '/homepage');
+    const username = req.session.username;
+    if (username) {
+        res.send(`${username}! <a href="/logout">Logout</a>`);
+    } else {
+        res.send('<a href="/login">Login</a>');
+    }
 })
 
 //route untuk ke game
-router.get('/game', function(req, res) {
+router.get('/game', function (req, res) {
     res.render(__dirname + '/games');
 })
 
 // route untuk login
-router.post('/login', function(req, res) {
-    const { username, password } = req.body;
+// baru bisa login dengan username: admin dan password: admin
+router.get('/login', function (req, res) {
+    res.render(__dirname + '/login');
+})
 
-    // cari pengguna dengan username yang sesuai
-    const user = userData.find(user => user.username === username);
-    // jika pengguna ditemukan dan passwordnya sesuai
-    if (user && user.password === password) {
-        res.send('Login berhasil');
+// route untuk konfirmasi login username & password
+router.post('/login-confirmation', function (req, res) {
+// cari pengguna dengan username yang sesuai
+    const user = userData.find(user => user.username === req.body.username);
+// jika pengguna ditemukan dan passwordnya sesuai
+    if (user && user.password === req.body.password) {
+        var username = user.username;
+        res.render(__dirname + '/homepage', {username: username});
     } else {
-        res.send('Username atau password salah');
+// jika data yang dimasukkan salah kembali ke menu login
+        var errorMessage = 'Username atau password salah';
+        res.render(__dirname + '/login', { errorMessage: errorMessage });
     }
 });
 
