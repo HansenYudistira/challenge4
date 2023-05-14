@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express();
-const userData = require('./db/usernameData.json');
+const mongoDB = require('./db/mongo');
 
 //route untuk ke homepage
 router.get(['/', '/home'], function (req, res) {
@@ -25,17 +25,33 @@ router.get('/login', function (req, res) {
 })
 
 // route untuk konfirmasi login username & password
-router.post('/login-confirmation', function (req, res) {
-// cari pengguna dengan username yang sesuai
-    const user = userData.find(user => user.username === req.body.username);
-// jika pengguna ditemukan dan passwordnya sesuai
-    if (user && user.password === req.body.password) {
-        var username = user.username;
-        res.render(__dirname + '/homepage', {username: username});
-    } else {
-// jika data yang dimasukkan salah kembali ke menu login
-        var errorMessage = 'Username atau password salah';
-        res.render(__dirname + '/login', { errorMessage: errorMessage });
+router.post('/login-confirmation', async function (req, res) {
+    try {
+        //ambil data dari body
+        const data = req.body;
+        // ambil data dari database
+        const userData = await mongoDB.db.findOne({ username: data.username});
+        console.log(userData);
+        // perbandingan username & password
+        // jika user data tidak ditemukan kembali ke menu login
+        if (userData === null) {
+            var errorMessage = 'Username atau password salah';
+            res.render(__dirname + '/login', { errorMessage: errorMessage });
+        } else {
+            // jika data yang dimasukkan benar
+            if (data.password === userData.password) {
+                var username = userData.username;
+                res.render(__dirname + '/homepage', { username: username });
+            }
+            // jika password salah
+            else {
+                var errorMessage = 'Username atau password salah';
+                res.render(__dirname + '/login', { errorMessage: errorMessage });
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ status: 'Internal Server Error!' });
     }
 });
 

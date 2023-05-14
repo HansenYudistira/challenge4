@@ -2,7 +2,6 @@
 const express = require('express');
 const fs = require('fs');
 const routes = require('./router');
-const userData = require('./db/usernameData.json');
 const { error } = require('console');
 const port = 3000;
 // == BUAT SERVERNYA

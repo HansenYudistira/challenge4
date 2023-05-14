@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "dotenv-load node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +22,12 @@
     "body-parser": "^1.20.2",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "mongodb": "^4.16.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "dotenv-load": "^2.0.1",
+    "envload": "^0.1.1",
     "nodemon": "^2.0.22"
   }
 }
