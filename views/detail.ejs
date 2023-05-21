@@ -10,61 +10,47 @@
 </head>
 
 <body class="p-3">
-    <table class="table">
-        <thead>
+    <h2>User Data</h2>
+    <table>
+        <body>
             <tr>
-                <th scope="col">username</th>
-                <th scope="col">name</th>
-                <th scope="col">city</th>
-                <th scope="col">country</th>
+                <td>Username</td>
+                <td>
+                    : <%- user.username %>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            <% userData.forEach(function (data, index) { %>
-                <tr>
-                    <th scope="row"><%-index + 1 %></th>
-                    <td><%- data.username %></td>
-                    <td>
-                        <a href="/user/update/?username=<%- data.username %>">
-                            <button type="button" class="btn btn-primary">Detail</button>
-                        </a>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal<%- data.username %>">Hapus</button>
-                        <!-- modal -->
-                        <div class="modal fade" id="exampleModal<%- data.username %>" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Menghapus Data</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Yakin untuk menghapus data? Ga nyesel?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <form class="m-0 p-0" action="/user/delete/?username=<%- data.username %>"
-                                            method="post">
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <% }) %>
-        </tbody>
+            <tr>
+                <td>Name</td>
+                <td>
+                    : <%- user.name %>
+                </td>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>
+                    : <%- user.city %>
+                </td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>
+                    : <%- user.country %>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="/admin">
+                        <button class="btn btn-danger" type="button">Back</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="/user/update/?username=<%- user.username %>">
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </a>
+                </td>
+            </tr>
+        </body>
     </table>
-    <br>
-    <a href="/user/add">
-        <button type="button" class="btn btn-success">Add</button>
-    </a>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>

@@ -59,9 +59,39 @@ const userbiodataModel = sequelize.define('biodataUser', {
     updatedAt: false
 });
 
+const userHistoryModel = sequelize.define('historyUser', {
+    id: {
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false
+    },
+    win: {
+        type: DataTypes.INTEGER
+    },
+    lose: {
+        type: DataTypes.INTEGER
+    },
+    userDataUsername: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    }
+}, {
+    tableName: 'historyUser',
+    underscored: false,
+    createdAt: false,
+    updatedAt: true
+});
+
 usernameModel.hasOne(userbiodataModel, {
     foreignKey: 'userDataUsername',
     sourceKey: 'username'
 })
 
-module.exports = { usernameModel, userbiodataModel, sequelize };
+usernameModel.hasOne(userHistoryModel, {
+    foreignKey: 'userDataUsername',
+    sourceKey: 'username'
+})
+
+module.exports = { usernameModel, userbiodataModel, userHistoryModel, sequelize };
