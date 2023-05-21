@@ -6,7 +6,7 @@ const { usernameModel, userbiodataModel, sequelize } = require('./db/sequelize')
 
 //route untuk ke homepage
 router.get(['/', '/home'], function (req, res) {
-    res.render(__dirname + '/homepage');
+    res.render('homepage');
     const username = req.session.username;
     if (username) {
         res.send(`${username}! <a href="/logout">Logout</a>`);
@@ -17,13 +17,13 @@ router.get(['/', '/home'], function (req, res) {
 
 //route untuk ke game
 router.get('/game', function (req, res) {
-    res.render(__dirname + '/games');
+    res.render('games');
 })
 
 // route untuk login
 // baru bisa login dengan username: admin dan password: admin
 router.get('/login', function (req, res) {
-    res.render(__dirname + '/login');
+    res.render('login');
 })
 
 // route untuk konfirmasi login username & password
@@ -40,17 +40,22 @@ router.post('/login-confirmation', async function (req, res) {
         // jika user data tidak ditemukan kembali ke menu login
         if (userData === null) {
             var errorMessage = 'Username atau password salah';
-            res.render(__dirname + '/login', { errorMessage: errorMessage });
+            res.render('login', { errorMessage: errorMessage });
         } else {
             // jika data yang dimasukkan benar
             if (data.password === userData.password) {
                 var username = userData.username;
-                res.render(__dirname + '/homepage', { username: username });
+                // jika ingin masuk ke dashboard editing database pakai username admin
+                if (username === 'admin') {
+                    res.redirect('/admin');
+                } else {
+                    res.render('homepage', { username: username });
+                }
             }
             // jika password salah
             else {
                 var errorMessage = 'Username atau password salah';
-                res.render(__dirname + '/login', { errorMessage: errorMessage });
+                res.render('login', { errorMessage: errorMessage });
             }
         }
     } catch (error) {
@@ -58,6 +63,41 @@ router.post('/login-confirmation', async function (req, res) {
         res.status(500).json({ status: 'Internal Server Error!' });
     }
 });
+
+router.get('/admin', async function (req, res) {
+    try {
+        // ambil data customer di db
+        let userData = await usernameModel.findAll();
+        userData = userData.map(function (data) {
+            return data.toJSON();
+        })
+        // map data dari database menjadi string
+        let userDataString = '';
+        userData.forEach(function (data, index) {
+            userDataString += `
+            <tr>
+                <th scope="row">${index + 1}</th>
+                <td>${data.username}</td>
+                <td>
+                    <button type="button" class="btn btn-primary">Detail</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger">Hapus</button>
+                </td>
+            </tr>
+            `
+        });
+        // tampilkan halaman
+        res.render('admin-menu', { dataUser: userDataString });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error!');
+    }
+})
+
+router.get('/user/add', function (req, res) {
+    res.render('user_add')
+})
 
 // get user list menggunakan query biasa
 // router.get('/user1/list', async function(req,res) {
@@ -94,16 +134,16 @@ router.post('/login-confirmation', async function (req, res) {
 // });
 
 //get user list dengan sequelize
-router.get('/user/list', async function(req,res) {
-    try{
+router.get('/user/list', async function (req, res) {
+    try {
         let condition = {}
         //filter
-        if(req.query.username) condition = { ...condition, username:req.query.username};
-        if(req.query.password) condition = { ...condition, password:req.query.password};
+        if (req.query.username) condition = { ...condition, username: req.query.username };
+        if (req.query.password) condition = { ...condition, password: req.query.password };
         // ambil data dari database
-        const queryData = await usernameModel.findAll({ where: condition});
+        const queryData = await usernameModel.findAll({ where: condition });
         const userData = queryData;
-        res.json({data: userData});
+        res.json({ data: userData });
     }
     catch (error) {
         console.log(error);
@@ -111,8 +151,8 @@ router.get('/user/list', async function(req,res) {
     }
 });
 
-router.post('/user/insert', async function (req,res) {
-    try{
+router.post('/user/insert', async function (req, res) {
+    try {
         // ambil data dari body
         const username = req.body.username;
         const password = req.body.password;
@@ -127,12 +167,12 @@ router.post('/user/insert', async function (req,res) {
 })
 
 router.put('/user/update/:username', async function (req, res) {
-    try{
+    try {
         // ambil data dari body
         const username = req.body.username;
         const password = req.body.password;
         // update ke db dengan sequelize
-        await usernameModel.update({ username, password}, { where: {username: req.params.username} });
+        await usernameModel.update({ username, password }, { where: { username: req.params.username } });
         res.status(200).json({ message: 'userdata updated' });
     } catch (error) {
         console.log(error);
@@ -141,9 +181,9 @@ router.put('/user/update/:username', async function (req, res) {
 })
 
 router.delete('/user/delete/:username', async function (req, res) {
-    try{
+    try {
         // update ke db dengan sequelize
-        await usernameModel.destroy({ where: {username: req.params.username} });
+        await usernameModel.destroy({ where: { username: req.params.username } });
         res.status(200).json({ message: 'userdata deleted' });
     } catch (error) {
         console.log(error);
@@ -153,15 +193,15 @@ router.delete('/user/delete/:username', async function (req, res) {
 
 router.post('/user-biodata/insert', async function (req, res) {
     const transaction = await sequelize.transaction();
-    try{
+    try {
         // ambil bodynya
-        const {username, password, name, city, country} = req.body;
+        const { username, password, name, city, country } = req.body;
         // insert ke table user
-        const insertedData = await usernameModel.create({ username, password}, { transaction });
+        const insertedData = await usernameModel.create({ username, password }, { transaction });
         // insert ke table biodata
         await userbiodataModel.create({ name, city, country, username: insertedData.toJSON().username }, { transaction });
         await transaction.commit();
-        res.status(200).json({ message: 'user biodata updated' });
+        res.redirect('/admin');
     } catch (error) {
         await transaction.rollback();
         console.log(error);
