@@ -3,6 +3,7 @@ const router = express();
 const mongoDB = require('./db/mongo');
 const postgresqlDb = require('./db/postgresql')
 const { usernameModel, userbiodataModel, sequelize } = require('./db/sequelize')
+const { col } = require('sequelize');
 
 //route untuk ke homepage
 router.get(['/', '/home'], function (req, res) {
@@ -71,24 +72,8 @@ router.get('/admin', async function (req, res) {
         userData = userData.map(function (data) {
             return data.toJSON();
         })
-        // map data dari database menjadi string
-        let userDataString = '';
-        userData.forEach(function (data, index) {
-            userDataString += `
-            <tr>
-                <th scope="row">${index + 1}</th>
-                <td>${data.username}</td>
-                <td>
-                    <button type="button" class="btn btn-primary">Detail</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-danger">Hapus</button>
-                </td>
-            </tr>
-            `
-        });
         // tampilkan halaman
-        res.render('admin-menu', { dataUser: userDataString });
+        res.render('admin-menu', { userData });
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error!');
@@ -96,7 +81,7 @@ router.get('/admin', async function (req, res) {
 })
 
 router.get('/user/add', function (req, res) {
-    res.render('user_add')
+    res.render('user_upsert', { isUpdate: false });
 })
 
 // get user list menggunakan query biasa
@@ -166,26 +151,111 @@ router.post('/user/insert', async function (req, res) {
     }
 })
 
-router.put('/user/update/:username', async function (req, res) {
+router.get('/user/update', async function (req, res) {
     try {
-        // ambil data dari body
-        const username = req.body.username;
-        const password = req.body.password;
+        const username = req.query.username;
+        // ambil data dari database
+        const userData = await usernameModel.findOne({ 
+            where: { username },
+            attributes: [
+                'username',
+                'password',
+                [col('"biodataUser"."name"'), 'name'],
+                [col('"biodataUser"."city"'), 'city'],
+                [col('"biodataUser"."country"'), 'country']
+            ],
+            include: [
+                {
+                    model: userbiodataModel,
+                    attributes: []
+                }
+            ] 
+        });
+        console.log(userData)
         // update ke db dengan sequelize
-        await usernameModel.update({ username, password }, { where: { username: req.params.username } });
-        res.status(200).json({ message: 'userdata updated' });
+        res.render('detail', { user: userData.toJSON() });
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');
     }
 })
 
-router.delete('/user/delete/:username', async function (req, res) {
+router.get('/user/update/:username', async function (req, res) {
     try {
+        const username = req.params.username;
+        // ambil data dari database
+        const userData = await usernameModel.findOne({ 
+            where: { username },
+            attributes: [
+                'username',
+                'password',
+                [col('"biodataUser"."name"'), 'name'],
+                [col('"biodataUser"."city"'), 'city'],
+                [col('"biodataUser"."country"'), 'country']
+            ],
+            include: [
+                {
+                    model: userbiodataModel,
+                    attributes: []
+                }
+            ] 
+        });
+        console.log(userData)
         // update ke db dengan sequelize
-        await usernameModel.destroy({ where: { username: req.params.username } });
-        res.status(200).json({ message: 'userdata deleted' });
+        res.render('user_upsert', { user: userData.toJSON(), isUpdate: true });
     } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
+router.post('/user-biodata/update', async function (req, res) {
+    const transaction = await sequelize.transaction();
+    try {
+        // ambil data query
+        const username = req.query.username;
+        //ambil data dari body
+        const { password, name, city, country } = req.body;
+        // insert ke table user
+        const userData = await usernameModel.update({ username, password},{where: { username }, transaction});
+        // insert ke table biodata
+        await userbiodataModel.update({ name, city, country, userDataUsername: username }, { where: { userDataUsername: username }, transaction });
+        await transaction.commit();
+        res.redirect('/admin');
+    } catch (error) {
+        await transaction.rollback();
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
+// router.put('/user/update2/:username', async function (req, res) {
+//     try {
+//         // ambil data dari body
+//         const username = req.body.username;
+//         const password = req.body.password;
+//         // update ke db dengan sequelize
+//         await usernameModel.update({ username, password }, { where: { username: req.params.username } });
+//         res.status(200).json({ message: 'userdata updated' });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// })
+
+router.post('/user/delete', async function (req, res) {
+    const transaction = await sequelize.transaction();
+    try {
+        // ambil data query
+        const username = req.query.username;
+        // delete ke table biodata
+        await userbiodataModel.destroy( { where: { userDataUsername: username }, transaction });
+        // delete ke table user
+        await usernameModel.destroy({where: { username }, transaction});
+        await transaction.commit();
+        res.redirect('/admin');
+    } catch (error) {
+        await transaction.rollback();
         console.log(error);
         res.status(500).send('Internal Server Error');
     }
