@@ -1,6 +1,6 @@
+// const mongoDB = require('./db/mongo');
 const express = require('express');
 const router = express();
-const mongoDB = require('./db/mongo');
 const postgresqlDb = require('./db/postgresql')
 const { usernameModel, userbiodataModel, userHistoryModel, sequelize } = require('./db/sequelize')
 const { col } = require('sequelize');
