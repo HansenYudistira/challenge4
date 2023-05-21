@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express();
 const mongoDB = require('./db/mongo');
+const postgresqlDb = require('./db/postgresql')
 
 //route untuk ke homepage
 router.get(['/', '/home'], function (req, res) {
@@ -30,7 +31,9 @@ router.post('/login-confirmation', async function (req, res) {
         //ambil data dari body
         const data = req.body;
         // ambil data dari database
-        const userData = await mongoDB.db.findOne({ username: data.username});
+        // const userData = await mongoDB.db.findOne({ username: data.username});
+        const queryData = await postgresqlDb.client.query('SELECT * FROM public.user_data WHERE username = $1', [data.username]);
+        const userData = queryData.rows[0];
         console.log(userData);
         // perbandingan username & password
         // jika user data tidak ditemukan kembali ke menu login
