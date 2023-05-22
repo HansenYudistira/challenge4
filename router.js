@@ -17,8 +17,39 @@ router.get(['/', '/home'], function (req, res) {
 })
 
 //route untuk ke game
-router.get('/game', function (req, res) {
-    res.render('games');
+router.get('/game', async function (req, res) {
+    try {
+        const username = req.query.username;
+        // ambil data dari database
+        const userData = await usernameModel.findOne({ 
+            where: { username },
+            attributes: [
+                'username',
+                'password',
+                [col('"biodataUser"."name"'), 'name'],
+                [col('"biodataUser"."city"'), 'city'],
+                [col('"biodataUser"."country"'), 'country'],
+                [col('"historyUser"."win"'), 'win'],
+                [col('"historyUser"."lose"'), 'lose']
+            ],
+            include: [
+                {
+                    model: userbiodataModel,
+                    attributes: []
+                },
+                {
+                    model: userHistoryModel,
+                    attributes: []
+                }
+            ] 
+        });
+        console.log(userData)
+        // update ke db dengan sequelize
+        res.render('games', { user: userData.toJSON() });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
 })
 
 // route untuk login
@@ -50,7 +81,7 @@ router.post('/login-confirmation', async function (req, res) {
                 if (username === 'admin') {
                     res.redirect('/admin');
                 } else {
-                    res.render('homepage', { username: username });
+                    res.render('homepage', { username });
                 }
             }
             // jika password salah
@@ -96,6 +127,7 @@ router.post('/user-biodata/insert', async function (req, res) {
         const insertedData = await usernameModel.create({ username, password }, { transaction });
         // insert ke table biodata
         await userbiodataModel.create({ name, city, country, userDataUsername: insertedData.toJSON().username }, { transaction });
+        await userHistoryModel.create({ win: 0, lose: 0, userDataUsername: insertedData.toJSON().username }, { transaction });
         await transaction.commit();
         res.redirect('/admin');
     } catch (error) {
@@ -117,11 +149,17 @@ router.get('/user/detail', async function (req, res) {
                 'password',
                 [col('"biodataUser"."name"'), 'name'],
                 [col('"biodataUser"."city"'), 'city'],
-                [col('"biodataUser"."country"'), 'country']
+                [col('"biodataUser"."country"'), 'country'],
+                [col('"historyUser"."win"'), 'win'],
+                [col('"historyUser"."lose"'), 'lose']
             ],
             include: [
                 {
                     model: userbiodataModel,
+                    attributes: []
+                },
+                {
+                    model: userHistoryModel,
                     attributes: []
                 }
             ] 
@@ -148,11 +186,17 @@ router.get('/user/update', async function (req, res) {
                 'password',
                 [col('"biodataUser"."name"'), 'name'],
                 [col('"biodataUser"."city"'), 'city'],
-                [col('"biodataUser"."country"'), 'country']
+                [col('"biodataUser"."country"'), 'country'],
+                [col('"historyUser"."win"'), 'win'],
+                [col('"historyUser"."lose"'), 'lose']
             ],
             include: [
                 {
                     model: userbiodataModel,
+                    attributes: []
+                },
+                {
+                    model: userHistoryModel,
                     attributes: []
                 }
             ] 
@@ -173,11 +217,12 @@ router.post('/user-biodata/update', async function (req, res) {
         // ambil data query
         const username = req.query.username;
         //ambil data dari body
-        const { password, name, city, country } = req.body;
+        const { password, name, city, country, win, lose } = req.body;
         // insert ke table user
         const userData = await usernameModel.update({ username, password},{where: { username }, transaction});
         // insert ke table biodata
         await userbiodataModel.update({ name, city, country, userDataUsername: username }, { where: { userDataUsername: username }, transaction });
+        await userHistoryModel.update({ win, lose, userDataUsername: username }, { where: { userDataUsername: username }, transaction });
         await transaction.commit();
         res.redirect('/admin');
     } catch (error) {
@@ -193,8 +238,9 @@ router.post('/user/delete', async function (req, res) {
     try {
         // ambil data query
         const username = req.query.username;
-        // delete ke table biodata
+        // delete ke table biodata & history
         await userbiodataModel.destroy( { where: { userDataUsername: username }, transaction });
+        await userHistoryModel.destroy( { where: { userDataUsername: username }, transaction });
         // delete ke table user
         await usernameModel.destroy({where: { username }, transaction});
         await transaction.commit();
