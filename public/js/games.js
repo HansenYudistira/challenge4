@@ -109,7 +109,7 @@ class game {
     #userWin() {
         this.result = this.#changeColor(this.result);
         this.result.style.background = '#52CC7A';
-        this.result.innerText = 'PLAYER 1 WIN';
+        this.result.innerHTML = `${user.username} WIN`;
     }
 
     #userLose() {

@@ -9,6 +9,8 @@ body, .loginButton {
 
 .loginButton {
     font-size: 14px;
+    background: none;
+    border: none;
 }
 
 h1 {
@@ -30,7 +32,7 @@ h2 {
 }
 
 .page1 {
-    background-image: url(/assets/main-bg.jpg);
+    background-image: url(/images/assets/main-bg.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -57,7 +59,7 @@ h2 {
 }
 
 .page2 {
-    background-image: url(/assets/the-games-bg.jpg);
+    background-image: url(/images/assets/the-games-bg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -78,7 +80,7 @@ h2 {
 }
 
 .page3 {
-    background-image: url(/assets/features.jpg);
+    background-image: url(/images/assets/features.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -122,7 +124,7 @@ h2 {
 }
 
 .page5 {
-    background-image: url(/assets/top-score-bg.png);
+    background-image: url(/images/assets/top-score-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -170,7 +172,7 @@ h2 {
 }
 
 .page6 {
-    background-image: url(/assets/newsletter.png);
+    background-image: url(/images/assets/newsletter.png);
     background-repeat: no-repeat;
     background-size: cover;
 }

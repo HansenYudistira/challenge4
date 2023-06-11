@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games RPS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/games.css">
+</head>
+<body>
+    <!-- HEADER TOMBOL BACK DAN LOGO GAME -->
+    <header>
+        <a href="/home" type="button" class="backButton" >
+            <svg width="36" height="38" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M35.0039 37.8633L0.09375 22.4648V17.4375L35.0039 0V8.4375L10.957 19.582L35.0039 29.4609V37.8633Z" fill="#724C21"/>
+            </svg>
+        </a>
+        <img src="/images/assets/logo 1.png" alt="" class="logo">
+        <h1>ROCK PAPER SCISSORS</h1>
+    </header>
+    <br>
+    <br>
+    <div class="grid">
+        <!-- NAMA PLAYER DAN LAWANNYA -->
+        <div class="row" id="row-1">
+            <div class="col" id="col-11">
+                <h2 style="letter-spacing: 1px; text-align: center;"><%- user.username %></h2>
+            </div>
+            <div class="col" id="col-12"></div>
+            <div class="col" id="col-13">
+                <h2 style="letter-spacing: 1px; text-align: center;">COM</h2>
+            </div>
+        </div>
+        <div class="row" id="row-2">
+            <!--PILIHAN BATU-->
+            <div class="col" id="col-21">
+                <button onclick="chosen('r')" id="button1">
+                    <img src="/images/assets/batu.png" alt="" class="choices" id="batu">
+                </button>
+            </div>
+            <div class="col" id="col-22"></div>
+            <div class="col" id="col-23">
+                <div class="comChoice" id="computerChoice1">
+                    <img src="/images/assets/batu.png" alt="" id="batu-com">
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row-3">
+            <!--PILIHAN KERTAS-->
+            <div class="col" id="col-31">
+                <button onclick="chosen('p')" id="button2">
+                    <img src="/images/assets/kertas.png" alt="" class="choices" id="kertas">
+                </button>
+            </div>
+            <div class="col" id="result">
+                <span>VS</span>
+            </div>
+            <div class="col" id="col-33">
+                <div class="comChoice" id="computerChoice2">
+                    <img src="/images/assets/kertas.png" alt="" id="kertas-com">
+                </div>
+            </div>
+        </div>
+        <div class="row" id="row-4">
+            <!--PILIHAN GUNTING-->
+            <div class="col" id="col-41">
+                <button onclick="chosen('s')" id="button3">
+                    <img src="/images/assets/gunting.png" alt="" class="choices" id="gunting">
+                </button>
+            </div>
+            <div class="col" id="col-42"></div>
+            <div class="col" id="col-43">
+                <div class="comChoice" id="computerChoice3">
+                    <img src="/images/assets/gunting.png" alt="" id="gunting-com">
+                </div>
+            </div>
+        </div>          
+    </div>
+    <!--TOMBOL REFRESH-->
+    <button onclick="ulang()" id="button4">
+        <img src="/images/assets/refresh.png" alt="" class="refresh-img">
+    </button>   
+    <script src="/js/games.js"></script>    
+</body>
+</html>

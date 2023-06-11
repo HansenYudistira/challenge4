@@ -1,8 +1,9 @@
 //==LIBRARY YANG DIBUTUHKAN
 const express = require('express');
-const fs = require('fs');
-const routes = require('./router');
+const routes = require('./routes');
 const { error } = require('console');
+var cookieParser = require('cookie-parser');
+
 const port = 3000;
 // == BUAT SERVERNYA
 const app = express();
@@ -17,6 +18,7 @@ app.use(logger);
 app.use(express.urlencoded({extended: false}));
 app.use(express.static('public'));
 app.use(express.static('images'));
+app.use(cookieParser());
 
 app.use(function (req, res, next) {
     const date = new Date();

@@ -1,0 +1,56 @@
+<!-- HALAMAN KE 1 -->
+<div class="page1">
+    <div class="navbar">
+        <div class="grid-1" style="flex-grow: 3">
+            LOGO
+        </div>
+        <div class="grid-2" style="flex-grow: 1">
+            HOME
+        </div>
+        <div class="grid-3" style="flex-grow: 1">
+            WORK
+        </div>
+        <div class="grid-4" style="flex-grow: 1">
+            CONTACT
+        </div>
+        <div class="grid-5" style="flex-grow: 5">
+            ABOUT ME
+        </div>
+        <!-- JIKA BELUM LOGIN TAMPILANNYA SIGNUP 
+        JIKA SUDAH JADI SIGN OUT-->
+        <div class="grid-6" style="flex-grow: 1">
+            <% var username %>
+                <% if (username) { %>
+                    <form action="/logout" method="post">
+                        <button type="submit" class="loginButton">Log Out</button>
+                    </form>
+                    <% } else { %>
+                        <form action="/register" method="get">
+                            <button type="submit" class="loginButton">Register</button>
+                        </form>
+                        <% } %>
+        </div>
+        <!-- JIKA BELUM LOGIN TAMPILANNYA LOGIN 
+        JIKA SUDAH JADI NAMA USERNAMENYA-->
+        <div class="grid-7" style="flex-grow: 1">
+            <% if (username) { %>
+                <form action="/profile" method="get">
+                    <button type="submit" class="loginButton"><%= username %></button>
+                </form>
+                <% } else { %>
+                    <form action="/login" method="get">
+                        <button type="submit" class="loginButton">Login</button>
+                    </form>
+                    <% } %>
+        </div>
+    </div>
+    <h1 style="margin-top: 15%; text-align: center;">PLAY TRADITIONAL GAME</h1>
+    <p class="maintext">Experience new traditional game play</p>
+    <a href="/game" type="button" class="btn btn-warning playnow">PLAY</a>
+    <p class="subtext" style="text-align: center;">THE STORY</p>
+    <svg width="23" height="12" viewBox="0 0 23 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+        style="margin: 0 auto; display: block;">
+        <path d="M21.5786 1.83362H1.32422L11.338 10.0027L21.5786 1.83362Z" stroke="white" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</div>
