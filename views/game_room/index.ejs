@@ -1,0 +1,88 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Room</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/games.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body class="p-3">
+    <!-- <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nama Room</th>
+                <th scope="col">Player 1</th>
+                <th scope="col">Player 2</th>
+                <th scope="col">Join</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% gameRoomData.forEach(function (data, index) { %>
+                <tr>
+                    <th scope="row"><%- data.id %></th>
+                    <td><%- data.roomName %></td>
+                    <td><%- data.player1name %></td>
+                    <td><%- data.player2name %></td>
+                    <td>
+                        <a href="/join/<%- data.id %>">
+                            <button class="btn btn-primary">Join</button>
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <br> -->
+    <h1 class="container py-4 title">Welcome to Rock, Paper and Scissors game</h1>
+    <div id="initial" class="container col-md-6">
+        <button class="form-control btn btn-primary" onclick="createGame()">Create Game</button> 
+        <div class="text-center display-3">or</div>
+        <input class="form-control my-2" placeholder="Enter Code" type="text" name="" id="roomUniqueId" />
+        <button class="form-control btn btn-secondary" onclick="joinGame()">Join Game</button>
+    </div>
+    <div id="gamePlay">
+        <div id="waitingArea">
+
+        </div>
+        <div id="gameArea" class="h3 row" style="display: none;">
+            <div class="col-md-6">
+                You:
+                <div id="player1Choice">
+                    <button class="rock" onclick="sendChoice('Rock')">
+                        <img src="/images/assets/batu.png" alt="" id="batu">
+                    </button>
+                    <button class="paper" onclick="sendChoice('Paper')">
+                        <img src="/images/assets/kertas.png" alt="" id="kertas">
+                    </button>
+                    <button class="scissor" onclick="sendChoice('Scissor')">
+                        <img src="/images/assets/gunting.png" alt="" id="gunting">
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                Opponent:
+                <div id="player2Choice">
+                    <p id="opponentState">Waiting for Opponent</p>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="winnerArea">
+
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="/js/homepage.js"></script>
+</body>
+
+</html>

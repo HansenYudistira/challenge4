@@ -1,7 +1,7 @@
 const CryptoJs = require('crypto-js');
 const JWT = require('jsonwebtoken');
-const { userModel, userBiodataModel, userHistoryModel } = require('../models/RelationshipModel');
-const { sequelize } = require('../config')
+const { userModel, userBiodataModel, userHistoryModel, gameroomModel } = require('../models/RelationshipModel');
+const { sequelize } = require('../config');
 
 class MainController {
     //controller untuk menuju homepage
@@ -17,14 +17,107 @@ class MainController {
         }
     }
 
+    //controller untuk menuju game room page
+    static async showGameRoomPage(req, res) {
+        try {
+            // ambil data room di db
+            let gameRoomData = await gameroomModel.model.findAll();
+            gameRoomData = gameRoomData.map(function (data) {
+                return data.toJSON();
+            })
+            console.log(gameRoomData)
+            // tampilkan halaman
+            res.render('game_room', { gameRoomData });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+
     //controller untuk menuju game page
     static async showGamePage(req, res) {
         try {
+            // ambil data room di db
+            let gameRoomData = await gameroomModel.model.findAll();
+            gameRoomData = gameRoomData.map(function (data) {
+                return data.toJSON();
+            })
+            console.log(gameRoomData)
+            // tampilkan halaman
+            res.render('game_room', { gameRoomData });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+
+    // controller untuk update Win or Lose
+    static async updateWin(req, res) {
+        try {
+            const decodedToken = JWT.decode(req.cookies.token);
+            // update win + 1 ke database
+            await userBiodataModel.updateWin(decodedToken.username)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+    static async updateLose(req, res) {
+        try {
+            const decodedToken = JWT.decode(req.cookies.token);
+            // update win + 1 ke database
+            await userBiodataModel.updateLose(decodedToken.username)
+        } catch (error) {
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+
+    //controller untuk menuju page membuat room game baru
+    static async createGameRoomPage(req,res) {
+        res.render('create_room');
+    }
+
+    //controller untuk membuat room game baru
+    static async createGameRoom(req, res) {
+        const transaction = await sequelize.transaction();
+        try {
+            // ambil bodynya
+            const { roomName } = req.body;
+            // insert username & password to database
+            const insertedData = await gameroomModel.createNewRoom(roomName, { transaction });
+            await transaction.commit();
+            res.redirect('/game-room');
+        } catch (error) {
+            await transaction.rollback();
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
+    }
+
+    static async joinRoom(req, res) {
+        try {
+            const { id } = req.params;
             const decodedToken = JWT.decode(req.cookies.token);
             // ambil data dari database
-            const userData = await userModel.getDetail(decodedToken.username)
-            // update ke db dengan sequelize
-            res.render('games', { user: userData.toJSON() });
+            let gameRoomData = await gameroomModel.getDetail(id);
+            //kalau masih kosong join sebagai player 1
+            if(gameRoomData.player1name === null) {
+                await gameroomModel.updatePlayer1(id, decodedToken.username);
+                const token = JWT.sign({ username: decodedToken.username, id: decodedToken.id}, process.env.ROOM_SECRET, { expiresIn: '1h' });
+                res.cookie('tokenRoom', token, { maxAge: 1000 * 60 * 60 });
+                return res.render('games', {gameRoomData, user: decodedToken});
+            } else if(gameRoomData.player2name === null) {
+                await gameroomModel.updatePlayer2(id, decodedToken.username);
+                const token = JWT.sign({ username: decodedToken.username, id: decodedToken.id}, process.env.ROOM_SECRET, { expiresIn: '1h' });
+                res.cookie('tokenRoom', token, { maxAge: 1000 * 60 * 60 });
+                return res.render('games', {gameRoomData, user: decodedToken});
+            } else {
+                var errorMessage = 'Room Penuh !';
+                return res.redirect('/game-room');
+            }
+            //update ke db dengan sequelize
+            res.render('profile', { gameRoomData: gameRoomData.toJSON() });
         } catch (error) {
             console.log(error);
             res.status(500).send('Internal Server Error');
@@ -65,8 +158,14 @@ class MainController {
         }
     }
 
+    static async submitRPS(req, res) {
+        const RPS = req.body.RPS;
+
+    }
+
     static logout(req, res) {
         res.clearCookie('token');
+        res.clearCookie('tokenRoom');
         res.redirect('login');
     }
 
@@ -120,7 +219,7 @@ class MainController {
 
     //controller untuk menuju register page
     static getRegisterPage(req, res) {
-        res.render('register', { isWrong: "hidden" });
+        res.render('register');
     }
 
     //controller untuk post register Page

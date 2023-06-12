@@ -8,6 +8,7 @@ const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
 const button4 = document.querySelector("#button4");
+var socket = io();
 
 button1.addEventListener("click", disabledButtons);
 button2.addEventListener("click", disabledButtons);

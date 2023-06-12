@@ -18,69 +18,71 @@
         </a>
         <img src="/images/assets/logo 1.png" alt="" class="logo">
         <h1>ROCK PAPER SCISSORS</h1>
+        <h1><%- gameRoomData.roomName %></h1>
     </header>
     <br>
     <br>
     <div class="grid">
         <!-- NAMA PLAYER DAN LAWANNYA -->
-        <div class="row" id="row-1">
-            <div class="col" id="col-11">
-                <h2 style="letter-spacing: 1px; text-align: center;"><%- user.username %></h2>
+        <div class="flex-container">
+            <div class="column">
+                <h2 style="letter-spacing: 1px; text-align: center;">
+                    <%= gameRoomData.player1name %>
+                </h2>
             </div>
-            <div class="col" id="col-12"></div>
-            <div class="col" id="col-13">
-                <h2 style="letter-spacing: 1px; text-align: center;">COM</h2>
-            </div>
-        </div>
-        <div class="row" id="row-2">
-            <!--PILIHAN BATU-->
-            <div class="col" id="col-21">
-                <button onclick="chosen('r')" id="button1">
-                    <img src="/images/assets/batu.png" alt="" class="choices" id="batu">
-                </button>
-            </div>
-            <div class="col" id="col-22"></div>
-            <div class="col" id="col-23">
-                <div class="comChoice" id="computerChoice1">
-                    <img src="/images/assets/batu.png" alt="" id="batu-com">
-                </div>
+            <div class="column"></div>
+            <div class="column">
+                <h2 style="letter-spacing: 1px; text-align: center;">
+                    <%= gameRoomData.player2name %>
+                </h2>
             </div>
         </div>
-        <div class="row" id="row-3">
-            <!--PILIHAN KERTAS-->
-            <div class="col" id="col-31">
-                <button onclick="chosen('p')" id="button2">
-                    <img src="/images/assets/kertas.png" alt="" class="choices" id="kertas">
-                </button>
+        <div class="flex-container-2">
+            <div class="column-2">
+                <% if(gameRoomData.player1name ==== user.username) { %>
+                <form action="/submit-player1" method="post">
+                    <button type="submit" name="RPS" value="rock" id="button">
+                        <img src="/images/assets/batu.png" alt="rock images" id="batu">
+                    </button>
+                    <button type="submit" name="RPS" value="paper" id="button">
+                        <img src="/images/assets/kertas.png" alt="paper images" id="kertas">
+                    </button>
+                    <button type="submit" name="RPS" value="scissor" id="button">
+                        <img src="/images/assets/gunting.png" alt="scissor images" id="gunting">
+                    </button>
+                </form>
+                <% } else { %>
+                    <img src="/images/assets/batu.png" alt="rock images" id="batu">
+                    <img src="/images/assets/kertas.png" alt="paper images" id="kertas">
+                    <img src="/images/assets/gunting.png" alt="scissor images" id="gunting">
+                    <% } %>
             </div>
-            <div class="col" id="result">
-                <span>VS</span>
-            </div>
-            <div class="col" id="col-33">
-                <div class="comChoice" id="computerChoice2">
-                    <img src="/images/assets/kertas.png" alt="" id="kertas-com">
-                </div>
+            <div class="column-2" id="vs">VS</div>
+            <div class="column-2">
+                <% if(gameRoomData.player2name ==== user.username) { %>
+                <form action="/submit-player1" method="post">
+                    <button type="submit" name="RPS" value="rock" id="button">
+                        <img src="/images/assets/batu.png" alt="rock images" id="batu">
+                    </button>
+                    <button type="submit" name="RPS" value="paper" id="button">
+                        <img src="/images/assets/kertas.png" alt="paper images" id="kertas">
+                    </button>
+                    <button type="submit" name="RPS" value="scissor" id="button">
+                        <img src="/images/assets/gunting.png" alt="scissor images" id="gunting">
+                    </button>
+                </form>
+                <% } else { %>
+                    <img src="/images/assets/batu.png" alt="rock images" id="batu">
+                    <img src="/images/assets/kertas.png" alt="paper images" id="kertas">
+                    <img src="/images/assets/gunting.png" alt="scissor images" id="gunting">
+                    <% } %>
             </div>
         </div>
-        <div class="row" id="row-4">
-            <!--PILIHAN GUNTING-->
-            <div class="col" id="col-41">
-                <button onclick="chosen('s')" id="button3">
-                    <img src="/images/assets/gunting.png" alt="" class="choices" id="gunting">
-                </button>
-            </div>
-            <div class="col" id="col-42"></div>
-            <div class="col" id="col-43">
-                <div class="comChoice" id="computerChoice3">
-                    <img src="/images/assets/gunting.png" alt="" id="gunting-com">
-                </div>
-            </div>
-        </div>          
-    </div>
-    <!--TOMBOL REFRESH-->
-    <button onclick="ulang()" id="button4">
+    
+    <button onclick="ulang()" id="buttonRefresh">
         <img src="/images/assets/refresh.png" alt="" class="refresh-img">
     </button>   
     <script src="/js/games.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
 </body>
 </html>

@@ -1,3 +1,7 @@
+* {
+    font-family: "Optima" !important;
+}
+
 body {
     background-color: #c0a37d;
     padding: 20px;
@@ -37,12 +41,33 @@ h2 {
     height: 72px;
 }
 
-#batu {
-    width: 128px;
-    height: 92px;
+.flex-container {
+    display: flex;
 }
 
-#batu-com {
+.column {
+    flex: 1;
+    background: none;
+    padding: 10px;
+}
+
+.flex-container-2 {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    justify-content: center;
+}
+
+.column-2 {
+    flex: 1;
+    background: none;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#batu {
     width: 128px;
     height: 92px;
 }
@@ -52,22 +77,21 @@ h2 {
     height: 150px;
 }
 
-#kertas-com {
-    width: 115px;
-    height: 150px;
-}
-
 #gunting {
     width: 134px;
     height: 160px;
 }
 
-#gunting-com {
-    width: 134px;
-    height: 160px;
+#vs {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 72px;
+    text-align: center;
+    color: black;
 }
 
-button {
+button, #player2 {
     background: none;
     border: none;
     padding: 0;
@@ -76,13 +100,7 @@ button {
     border-radius: 10px;
 }
 
-.comChoice {
-    width: 180px;
-    height: 180px;
-    border-radius: 10px;
-}
-
-#button1:hover, #button2:hover, #button3:hover {
+#button:hover {
     background: #c4c4c4;
     transition: all 0.5s ease;
     border-radius: 10px;
@@ -99,20 +117,7 @@ button {
     align-content: center;
 }
 
-.grid {
-    grid-template-columns: 180px 180px auto 200px;
-    text-align: center;
-}
-
-.row {
-    flex-wrap: nowrap;
-}
-
-.col {
-    padding: 20px 20px 10px;
-}
-
-#button4 {
+#buttonRefresh {
     width: 100%;
     display: flex;
     justify-content: center;

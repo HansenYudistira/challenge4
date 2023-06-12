@@ -39,6 +39,16 @@ class userhistoryModel {
         return updatedData;
     }
 
+    async updateWin(username) {
+        const updatedData = await this.model.update({ win: win + 1, userDataUsername: username }, { where: { userDataUsername: username } });
+        return updatedData;
+    }
+
+    async updateLose(username) {
+        const updatedData = await this.model.update({ lose: lose + 1, userDataUsername: username }, { where: { userDataUsername: username } });
+        return updatedData;
+    }
+
     async deleteData(username) {
         const deletedData = await this.model.destroy({ where: { userDataUsername: username } });
         return deletedData;

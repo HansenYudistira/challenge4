@@ -9,6 +9,18 @@ const { AlreadyLoginCheck } = require('../lib/AlreadyLoginCheck')
 //route untuk ke homepage
 router.get(['/', '/home'], MainController.showHomePage);
 
+//route untuk ke game room
+router.get('/game-room', AuthorizationCheck, MainController.showGameRoomPage);
+
+//route untuk menuju page membuat room game baru
+router.get('/room/create', AuthorizationCheck, MainController.createGameRoomPage);
+
+//route untuk membuat room game baru
+router.post('/room/create', AuthorizationCheck, MainController.createGameRoom);
+
+//route untuk join ke room
+router.get('/join/:id', AuthorizationCheck, MainController.joinRoom);
+
 //route untuk ke game
 router.get('/game', AuthorizationCheck, MainController.showGamePage);
 
@@ -36,6 +48,9 @@ router.get('/updateProfile', AuthorizationCheck, MainController.updateProfilePag
 
 //route untuk post update profile user
 router.post('/updateProfile', AuthorizationCheck, MainController.updateProfile)
+
+//route untuk post submit pilihan game
+router.post('/submit', AuthorizationCheck, MainController.submitRPS)
 
 // ke halaman update database, bisa login dengan admin atau langsung ke /admin
 router.get('/admin', SuperAdminCheck, MainController.adminMenu);
